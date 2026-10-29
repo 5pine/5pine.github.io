@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Elsie Tesla auth</title>
+<style>
+  body{font:16px/1.4 system-ui,sans-serif;max-width:40rem;margin:2rem auto;padding:0 1rem}
+  code{word-break:break-all;background:#f4f4f4;padding:.2rem .4rem;display:block;margin:1rem 0}
+</style>
+<h1>Tesla authorization</h1>
+<p id="status">Reading…</p>
+<code id="code"></code>
+<script>
+const p = new URLSearchParams(location.search);
+const code = p.get('code');
+const err = p.get('error');
+const desc = p.get('error_description');
+const status = document.getElementById('status');
+const box = document.getElementById('code');
+if (err) {
+  status.textContent = 'Authorization failed: ' + err + (desc ? ' — ' + desc : '');
+} else if (code) {
+  status.textContent = 'Success. Authorization code captured (Elsie can finish from here). Leave this tab open.';
+  box.textContent = code;
+} else {
+  status.textContent = 'No code in URL. If you just approved, check the address bar for ?code=…';
+}
+</script>
